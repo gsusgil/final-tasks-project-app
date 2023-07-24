@@ -580,41 +580,77 @@ onMounted(() => {
       loading.value = false; // Corrección: Se establece loading en false al finalizar el cierre de sesión
     }
   }
+
+  const updateProfile = async () => {
+  try {
+    loading.value = true; // Corrección: Se establece loading en true al iniciar la actualización del perfil
+
+    const updatedProfileData = {
+      full_name: username.value,
+      website: website.value,
+      location: location.value,
+      // Asegúrate de agregar los campos adicionales que deseas editar
+    };
+    console.log(updatedProfileData);
+
+    // Obtén el ID del usuario autenticado
+    const userId = supabase.auth.user().id;
+
+    // Realiza una llamada a la API de Supabase para actualizar los datos del perfil
+    const { data, error } = await supabase
+      .from("profiles")
+      .update(updatedProfileData)
+      .eq("user_id", userId); // Agregar la condición de coincidencia con user_id
+
+    if (error) {
+      console.error(error);
+    } else {
+      console.log("Perfil actualizado correctamente");
+      // Emitir evento para actualizar el perfil en el componente Account
+      emit('updateProfileEmit', updatedProfileData);
+    }
+  } catch (error) {
+    alert(error.message);
+  } finally {
+    loading.value = false; // Corrección: Se establece loading en false al finalizar la actualización del perfil
+  }
+};
+
   
   // Función para actualizar el perfil
-  const updateProfile = async () => {
-    try {
-      loading.value = true; // Corrección: Se establece loading en true al iniciar la actualización del perfil
+//   const updateProfile = async () => {
+//     try {
+//       loading.value = true; // Corrección: Se establece loading en true al iniciar la actualización del perfil
   
-      const updatedProfileData = {
-        full_name: username.value,
-        website: website.value,
-        location: location.value,
-        // Asegúrate de agregar los campos adicionales que deseas editar
-      };
-      console.log(updatedProfileData);
+//       const updatedProfileData = {
+//         full_name: username.value,
+//         website: website.value,
+//         location: location.value,
+//         // Asegúrate de agregar los campos adicionales que deseas editar
+//       };
+//       console.log(updatedProfileData);
   
-      // Obtén el ID del usuario autenticado
-      const userId = supabase.auth.user().id;
+//       // Obtén el ID del usuario autenticado
+//       const userId = supabase.auth.user().id;
   
-      // Usa el método "upsert" en lugar de "update" para garantizar que se cree un nuevo perfil si no existe uno para este usuario
-      const { data, error } = await supabase
-        .from("profiles")
-        .upsert({ user_id: userId, ...updatedProfileData });
+//       // Usa el método "upsert" en lugar de "update" para garantizar que se cree un nuevo perfil si no existe uno para este usuario
+//       const { data, error } = await supabase
+//         .from("profiles")
+//         .upsert({ user_id: userId, ...updatedProfileData });
   
-      if (error) {
-        console.error(error);
-      } else {
-        console.log("Perfil actualizado correctamente");
-        // Emitir evento para actualizar el perfil en el componente Account
-        emit('updateProfileEmit', updatedProfileData);
-      }
-    } catch (error) {
-      alert(error.message);
-    } finally {
-      loading.value = false; // Corrección: Se establece loading en false al finalizar la actualización del perfil
-    }
-  };
+//       if (error) {
+//         console.error(error);
+//       } else {
+//         console.log("Perfil actualizado correctamente");
+//         // Emitir evento para actualizar el perfil en el componente Account
+//         emit('updateProfileEmit', updatedProfileData);
+//       }
+//     } catch (error) {
+//       alert(error.message);
+//     } finally {
+//       loading.value = false; // Corrección: Se establece loading en false al finalizar la actualización del perfil
+//     }
+//   };
   
   // Función para mostrar el nombre de usuario y sitio web al cargar el componente
   onMounted(() => {

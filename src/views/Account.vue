@@ -493,6 +493,7 @@ onMounted(async () => {
     </div>
 
     <h1>Account</h1>
+    <div>
     <Perfil
       :session="session"
       :profile="profile"
@@ -504,10 +505,11 @@ onMounted(async () => {
     />
     <div v-else>Loading...</div>
   </div>
+  </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed, defineEmits } from "vue"; // Se agrega "defineEmits"
+import { ref, onMounted, watch, computed, defineEmits } from "vue"; 
 import { useUserStore } from "../stores/user";
 import { supabase } from "../supabase";
 import Nav from "../components/Nav.vue";
@@ -548,7 +550,7 @@ async function getProfile() {
 
     // Obtén el perfil asociado con el ID del usuario
     const { data: profileData, error } = await supabase
-      .from('profiles')
+      .from("profiles")
       .select()
       .match({ user_id: user.id });
 
@@ -556,7 +558,8 @@ async function getProfile() {
     console.log("profile", profileData);
 
     // Asigna los valores del perfil a las variables del componente
-    if (profileData && profileData.length > 0) { // Se verifica si hay datos de perfil antes de asignarlos
+    if (profileData && profileData.length > 0) {
+      // Se verifica si hay datos de perfil antes de asignarlos
       const userProfile = profileData[0];
       username.value = userProfile.username;
       website.value = userProfile.website;
@@ -627,7 +630,6 @@ onMounted(async () => {
   }
 });
 </script>
-
 
 <style>
 img {
