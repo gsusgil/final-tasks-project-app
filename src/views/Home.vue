@@ -8,30 +8,49 @@
     </div>
     <NewTask />
     <h1>Tasks:</h1>
-    <TaskItem v-for="task in tasks" :key="task.id" :task="task" />
+    <TaskItem v-for="task in tasks" :key="task.id" :task="task" @taskDeleted="handleTaskDeleted(task)" />
+
+    <!-- Integra el componente Profile -->
+    <!-- <Profile :session="session" /> -->
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useTaskStore } from "../stores/task";
 import { useRouter } from 'vue-router';
 import Nav from '../components/Nav.vue';
 import NewTask from '../components/NewTask.vue';
 import TaskItem from '../components/TaskItem.vue';
 
+
 const taskStore = useTaskStore();
 
 // Variable para guardar las tareas de supabase
 const tasks = ref([]);
 
+// Obtener la sesión del usuario desde la ruta
+const router = useRouter();
+const session = ref(router.currentRoute.value.meta.session);
+
 // Creamos una función que conecte a la store para conseguir las tareas de supabase
-const getTasks = async() => {
+const fetchTasks = async () => {
   tasks.value = await taskStore.fetchTasks();
 };
 
-getTasks();
+onMounted(fetchTasks); // Obtener las tareas al montar el componente
 
+watch(() => taskStore.tasksArr, (newTasks) => {
+  tasks.value = newTasks; // Actualizar las tareas cuando cambien en el almacén de tareas
+});
+
+const handleTaskDeleted = async (task) => {
+  const confirmed = confirm("Are you sure you want to delete this task?");
+  if (confirmed) {
+    await taskStore.deleteTask(task.id);
+    await fetchTasks(); // Actualizar la lista de tareas después de la eliminación
+  }
+};
 </script>
 
 <style></style>
