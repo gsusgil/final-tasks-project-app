@@ -11,7 +11,7 @@
     <TaskItem v-for="task in tasks" :key="task.id" :task="task" @taskDeleted="handleTaskDeleted(task)" />
 
     <!-- Integra el componente Profile -->
-    <!-- <Profile :session="session" /> -->
+    <Profile :session="session" />
   </div>
 </template>
 

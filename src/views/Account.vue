@@ -12,6 +12,7 @@
       v-if="!isLoading"
       :username="username"
       :website="website"
+      :avatarUrl="avatarUrl"
       :location="location"
       @updateProfileEmit="handleUpdateProfile"
     />
@@ -34,7 +35,7 @@ const profile = computed(() => (userStore.profile ? userStore.profile : {}));
 const session = ref(null);
 const isLoading = ref(true);
 
-const emitUpdateProfile = defineEmits(["updateProfileEmit"]); // Se agrega "defineEmits"
+const emitUpdateProfile = defineEmits(["updateProfileEmit"]); 
 
 // Variables para almacenar los datos del perfil
 const username = ref("");
@@ -60,7 +61,7 @@ async function getProfile() {
       return; // Salir del método si no hay usuario autenticado en la sesión
     }
 
-    // Obtén el perfil asociado con el ID del usuario
+    // Enlaza el perfil asociado con el ID del usuario
     const { data: profileData, error } = await supabase
       .from("profiles")
       .select()
@@ -76,7 +77,7 @@ async function getProfile() {
       username.value = userProfile.username;
       website.value = userProfile.website;
       location.value = userProfile.location;
-      // avatarUrl.value = userProfile.avatar_url; // Puedes agregar esto si también hay un campo "avatar_url" en la tabla "profiles"
+      avatarUrl.value = userProfile.avatar_url; 
     } else {
       // Si no se encuentra el perfil, establece valores predeterminados o muestra un mensaje de error
       username.value = "";
@@ -116,7 +117,7 @@ async function handleUpdateProfile(updatedProfileData) {
   } catch (error) {
     alert(error.message);
   } finally {
-    isLoading.value = false; // Se cambia "loading" por "isLoading"
+    isLoading.value = false; 
   }
 }
 
@@ -127,7 +128,7 @@ watch(
     if (newSession) {
       await getProfile();
     } else {
-      isLoading.value = false; // Se cambia "loading" por "isLoading"
+      isLoading.value = false; 
     }
   }
 );
@@ -138,7 +139,7 @@ onMounted(async () => {
   if (session.value) {
     await getProfile();
   } else {
-    isLoading.value = false; // Se cambia "loading" por "isLoading"
+    isLoading.value = false; 
   }
 });
 </script>

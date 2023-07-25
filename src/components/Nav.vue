@@ -1,6 +1,8 @@
 <template>
-  <nav>
+  <nav >
     <!-- <PersonalRouter :route="route" :buttonText="buttonText" class="logo-link"/> -->
+
+    
     <router-link to="/">
       Home
     </router-link>
@@ -25,6 +27,7 @@
         </li>
       </ul>
     </div>
+    
   </nav>
 </template>
 
@@ -64,7 +67,7 @@ const signOut = async () => {
 
 
 <style>
-.navbar-img {
+/* .navbar-img {
   width: 90px;
 }
 
@@ -82,5 +85,5 @@ nav ul {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+} */
 </style>

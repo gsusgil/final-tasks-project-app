@@ -9,7 +9,7 @@
   
    <div v-if="inputUpdate">
      <input type="text" placeholder=" Task Title " v-model="name"/>
-     <textarea type="text" placeholder="Update Task Description" v-model="description" @keyup.enter="updateTask" ></textarea>
+     <input type="text" placeholder="Update Task Description" v-bind:value="description" @input="updateDescription">
      <button @click="updateTask">Update</button>
    </div>
  </div>
@@ -37,16 +37,16 @@ const deleteTask = async () => {
  await taskStore.deleteTask(props.task.id);
  emit('taskDeleted');
 };
-// Utilizo una variable llamada inputUpdate que inicializo en false. Mi objetivo es utilizar esta variable en el DOM para ocultar los campos de entrada y así poder realizar una actualización más adelante.
+
 const inputUpdate = ref(false);
 
-// Funcion que realiza un "toggle" con un boton @click. La funcion cambia el valor de la variable de False a True. Como resultado, los campos de entrada y el boton se vuelven visibles en el DOM.
+// Funcion que realiza un "toggle" con un boton @click. para cambiar la condicion de la variable de false a true.
 const updateToggle = () => {
  inputUpdate.value = !inputUpdate.value;
 };
 
 
-// Actualizacion de los datos de la tarea a traves de una funcion que se comunica con la store task.js.
+// Actualiza los datos de la tarea a traves de una funcion que se comunica con la store task.js.
 const updateTask = () => {
  taskStore.updateTask(props.task.id, name.value, description.value);
  name.value = "";
@@ -61,8 +61,9 @@ const toggleComplete = () => {
  emit('taskUpdated');
 };
 
+// Obtener las tareas al montar el componente para mostrarla.
 onMounted(() => {
- emit('taskUpdated'); // Obtener las tareas al montar el componente
+ emit('taskUpdated'); 
 });
 </script>
 
