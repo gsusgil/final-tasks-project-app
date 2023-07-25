@@ -503,12 +503,14 @@ onMounted(() => {
   </template>
   
   <script setup>
-  import { ref, defineProps, defineEmits, onMounted } from 'vue';
+  import { ref, defineProps, defineEmits, onMounted, computed } from 'vue';
   import { useUserStore } from '../stores/user';
   import { supabase } from '../supabase';
   
   const props = defineProps(['session', 'profile']);
   const emitUpdateProfile = defineEmits(['updateProfileEmit']);
+
+  const profile = computed(() => (userStore.profile ? userStore.profile : {}));
   
   const userStore = useUserStore();
   const loading = ref(false); // Corrección: Se cambia true por false para inicializar loading
@@ -521,49 +523,51 @@ onMounted(() => {
   
   // Función para obtener los datos del perfil
   async function getProfile() {
-    try {
-      loading.value = true; // Corrección: Se establece loading en true al iniciar la carga del perfil
-  
-      const sessionValue = session.value;
-  
-      if (!sessionValue) {
-        console.log("No session found.");
-        return; // Salir del método si no hay sesión definida
-      }
-  
-      const { user } = sessionValue;
-  
-      if (!user) {
-        console.log("No user found in session.");
-        return; // Salir del método si no hay usuario autenticado en la sesión
-      }
-  
-      // Obtén el perfil asociado con el ID del usuario
-      const { data: profile, error } = await supabase
-        .from('profiles')
-        .select()
-        .match({ user_id: user.id });
-  
-      console.log("user.id", user.id);
-      console.log("profile", profile);
-  
-      // Asigna los valores del perfil a las variables del componente
-      if (profile) {
-        username.value = profile[0].username;
-        website.value = profile[0].website;
-        // Asegúrate de agregar las asignaciones de los campos adicionales que deseas editar
-      } else {
-        // Si no se encuentra el perfil, establece valores predeterminados o muestra un mensaje de error
-        username.value = "";
-        website.value = "";
-        // Asegúrate de agregar las asignaciones de los campos adicionales que deseas editar
-      }
-    } catch (error) {
-      alert(error.message);
-    } finally {
-      loading.value = false; // Corrección: Se establece loading en false al finalizar la carga del perfil
+  try {
+    loading.value = true;
+
+    const sessionValue = session.value;
+
+    if (!sessionValue) {
+      console.log("No session found.");
+      return; // Salir del método si no hay sesión definida
     }
+
+    const { user } = sessionValue;
+
+    if (!user) {
+      console.log("No user found in session.");
+      return; // Salir del método si no hay usuario autenticado en la sesión
+    }
+
+    // Obtén el perfil asociado con el ID del usuario
+    const { data: profileData, error } = await supabase
+      .from('profiles')
+      .select()
+      .match({ user_id: user.id });
+
+    console.log("user.id", user.id);
+    console.log("profileData", profileData);
+
+    // Asigna los valores del perfil a las variables del componente
+    if (profileData && profileData.length > 0) {
+      username.value = profileData[0].full_name;
+      website.value = profileData[0].website;
+      location.value = profileData[0].location;
+      // Asegúrate de agregar las asignaciones de los campos adicionales que deseas editar
+    } else {
+      // Si no se encuentra el perfil, establece valores predeterminados o muestra un mensaje de error
+      username.value = "";
+      website.value = "";
+      location.value = "";
+      // Asegúrate de agregar las asignaciones de los campos adicionales que deseas editar
+    }
+  } catch (error) {
+    alert(error.message);
+  } finally {
+    loading.value = false;
   }
+}
   
   // Función para cerrar sesión
   async function signOut() {
@@ -583,7 +587,7 @@ onMounted(() => {
 
   const updateProfile = async () => {
   try {
-    loading.value = true; // Corrección: Se establece loading en true al iniciar la actualización del perfil
+    loading.value = true;
 
     const updatedProfileData = {
       full_name: username.value,
@@ -591,71 +595,45 @@ onMounted(() => {
       location: location.value,
       // Asegúrate de agregar los campos adicionales que deseas editar
     };
-    console.log(updatedProfileData);
+    console.log('data actualizada', updatedProfileData);
 
-    // Obtén el ID del usuario autenticado
-    const userId = supabase.auth.user().id;
+    // Obtén el usuario autenticado
+    const user = supabase.auth.user();
+
+    // Asegúrate de que el usuario esté autenticado antes de continuar
+    if (!user) {
+      console.log('Usuario no autenticado. No se puede actualizar el perfil.');
+      return;
+    }
+
+    // Obtén el ID del usuario autenticado y asígnalo al perfil
+    const userId = user.id;
+    updatedProfileData.user_id = userId;
 
     // Realiza una llamada a la API de Supabase para actualizar los datos del perfil
     const { data, error } = await supabase
       .from("profiles")
       .update(updatedProfileData)
-      .eq("user_id", userId); // Agregar la condición de coincidencia con user_id
+      .eq("user_id", userId);
 
     if (error) {
       console.error(error);
     } else {
       console.log("Perfil actualizado correctamente");
       // Emitir evento para actualizar el perfil en el componente Account
-      emit('updateProfileEmit', updatedProfileData);
+      emitUpdateProfile('updateProfileEmit', updatedProfileData);
     }
   } catch (error) {
     alert(error.message);
   } finally {
-    loading.value = false; // Corrección: Se establece loading en false al finalizar la actualización del perfil
+    loading.value = false;
   }
 };
 
-  
-  // Función para actualizar el perfil
-//   const updateProfile = async () => {
-//     try {
-//       loading.value = true; // Corrección: Se establece loading en true al iniciar la actualización del perfil
-  
-//       const updatedProfileData = {
-//         full_name: username.value,
-//         website: website.value,
-//         location: location.value,
-//         // Asegúrate de agregar los campos adicionales que deseas editar
-//       };
-//       console.log(updatedProfileData);
-  
-//       // Obtén el ID del usuario autenticado
-//       const userId = supabase.auth.user().id;
-  
-//       // Usa el método "upsert" en lugar de "update" para garantizar que se cree un nuevo perfil si no existe uno para este usuario
-//       const { data, error } = await supabase
-//         .from("profiles")
-//         .upsert({ user_id: userId, ...updatedProfileData });
-  
-//       if (error) {
-//         console.error(error);
-//       } else {
-//         console.log("Perfil actualizado correctamente");
-//         // Emitir evento para actualizar el perfil en el componente Account
-//         emit('updateProfileEmit', updatedProfileData);
-//       }
-//     } catch (error) {
-//       alert(error.message);
-//     } finally {
-//       loading.value = false; // Corrección: Se establece loading en false al finalizar la actualización del perfil
-//     }
-//   };
-  
-  // Función para mostrar el nombre de usuario y sitio web al cargar el componente
-  onMounted(() => {
-    getProfile();
-  });
   </script>
 
   <style scoped></style>
+
+  <!-- onMounted(async() => {
+    getProfile();
+  }); -->

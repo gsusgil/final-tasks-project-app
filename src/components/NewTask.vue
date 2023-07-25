@@ -1,11 +1,11 @@
-<template>
+<template class="m-10">
   <h1>Add a new Task</h1>
   <div v-if="showErrorMessage">
     <p class="error-text">{{ errorMessage }}</p>
   </div>
   <div>
     <div class="input-field">
-      <input type="text" placeholder="Add a Task Title here" v-model="name" />
+      <input type="text" class="file:border file:border-solid" placeholder="Add a Task Title here" v-model="name" />
     </div>
     <div class="input-field">
       <textarea
