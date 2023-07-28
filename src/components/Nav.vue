@@ -1,8 +1,8 @@
 <template>
-  <nav >
-    <!-- <PersonalRouter :route="route" :buttonText="buttonText" class="logo-link"/> -->
+  <nav class="sidebar">
+     <!-- <PersonalRouter :route="route" :buttonText="buttonText" class="logo-link"/>  -->
 
-    
+<!--     
     <router-link to="/">
       Home
     </router-link>
@@ -15,19 +15,91 @@
         <li>
           <router-link to="/account">Your Account</router-link>
         </li>
-    </ul>
+    </ul> -->
+
 
     <div>
+      <button class="ml-4 my-2" @click="setOpen(true)">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          :stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6 "
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+          />
+        </svg>
+      </button>
+  
+      <div
+        v-if="open"
+        class="bg-white-600/50 min-h-screen w-full fixed top-0 left-0 right-0 backdrop-blur-sm"
+        @click="setOpen(false)"
+      ></div>
+  
+      <div
+        :class="{ 'w-60': open, 'w-0': !open }"
+        class="bg-purple-700 min-h-screen fixed top-0 left-0 transition-all duration-300"
+      >
+        <div v-if="open" class="pt-3">
+          <button class="ml-4 text-white mb-14" @click="setOpen(false)">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              :stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+          <div
+            class="text-center text-white text-xl hover:bg-orange-400 cursor-pointer py-3 mb-2"
+          >
+          <router-link to="/">
+      Home
+    </router-link>
+          </div>
+          <div
+            class="text-center text-white text-xl hover:bg-orange-400 cursor-pointer py-3 mb-2"
+          >
+          <router-link to="/">Task Manager</router-link>
+          </div>
+          <div
+            class="text-center text-white text-xl hover:bg-orange-400 cursor-pointer py-3 mb-2"
+          >
+          <router-link to="/account">Account</router-link>
+          </div>
+          <!-- <div
+            class="text-center text-white text-xl hover:bg-orange-400 cursor-pointer py-3 mb-2"
+          >
+          <button @click="signOut" class="button">Log out</button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="usee-log-out">
       <ul>
         <li class="log-out-welcome">
-          <p>Welcome, user</p>
+          <p class="text-sm text-purple-700">Welcome, {{ userEmail.split('@')[0] }}</p>
         </li>
         <li>
-          <button @click="signOut" class="button">Log out</button>
+          <button @click="signOut" class="button hover:text-red-400">Log out</button>
         </li>
       </ul>
     </div>
-    
+
   </nav>
 </template>
 
@@ -63,27 +135,28 @@ const signOut = async () => {
   } catch (error) {}
 };
 
+const open = ref(false);
+  
+  const setOpen = (value) => {
+    open.value = value;
+  };
+  
+
+
 </script>
 
 
-<style>
-/* .navbar-img {
-  width: 90px;
-}
+<style scoped>
 
-nav {
-  background-color: lightgray;
+.sidebar{
   display: flex;
-  width: 100%;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
 }
-
-nav ul {
-  list-style: none;
-  padding-inline-start: 0;
+ .usee-log-out > ul{
   display: flex;
   flex-direction: column;
   align-items: center;
-} */
+  padding: 1rem;
+ }
 </style>

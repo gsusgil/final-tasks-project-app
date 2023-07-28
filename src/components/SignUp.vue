@@ -1,10 +1,16 @@
 <template>
-  <div class="container">
+
+  
+  <div class="container ">
+
+    <div>
+  <img class="logo" src="../assets/image/LOGO_taskSync.svg" alt="logo_taskSync">
+</div>
 
     <div class="header">
-      <div class="header-description">
-        <h3 class="header-title">Register to ToDo App</h3>
-        <p class="header-subtitle">Start organizing your tasks!</p>
+      <div class="header-description ">
+        <h3 class="header-title text-xl ">Register</h3>
+        <p class="header-subtitle text-purple-700">Do it all and more! taskSync has your back!</p>
       </div>
     </div>
 
@@ -43,13 +49,13 @@
             required
           />
         </div>
-        <button class="button" type="submit">Sign Up</button>
-        <p>
+        <button class="button text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-700 dark:text-purple-700 dark:hover:text-white dark:hover:bg-purple-700 dark:focus:ring-purple-700" type="submit">Sign Up</button>
+        <p class="text-neutral-500 text-sm">
           Have an account?
           <PersonalRouter
             :route="route"
             :buttonText="buttonText"
-            class="sign-up-link"
+            class="sign-up-link hover:text-purple-800"
           />
         </p>
       </div>
@@ -104,4 +110,12 @@ const signUp = async () => {
 };
 </script>
 
-<style></style>
+<style scoped>
+.header {
+  padding: 1rem;
+  text-align: center;
+}
+.header-title {
+  padding: 0.5rem;
+}
+</style>

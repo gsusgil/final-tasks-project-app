@@ -1,6 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@100;200;300;400;500;600;700&family=Roboto+Condensed:wght@700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body {
+  font-family: "Poppins", sans-serif;
+  margin: auto;
+  padding: auto;
+  height: 100%;
+  max-width: 1250px;
+  font-size: 16px;
+}
+
+@media (max-width: 640px) {
+    body{
+        max-width: 610px;
+    }
+  }
+
 
 
 /* :root {
@@ -14,7 +33,51 @@
 } */
 
 /* SignIn Component */
+.container{
+    padding-top: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
+.logo{
+    width: 200px;
+    
+}
+.logo-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form-input {
+    padding: 1rem;
+}
+
+.input-field-label {
+    display: flex;
+    flex-direction: column;
+    color: #6d28d9;
+
+}
+
+.input-field{
+    width: 250px;
+    padding-left: 20px;
+    /* background-color: rgb(216, 216, 216); */
+    border: 2px solid #6d28d9;
+    border-radius: 8px ;
+}
+.input-field:focus {
+    background-color: #e8e7e7;
+  }
 /* h1 {
     color: var(--colorRed);
 } */
@@ -22,5 +85,9 @@
 /* SignUp Component */
 
 /* Home view */
+
+/* Sidebar */
+
+
 
 /* Account View */

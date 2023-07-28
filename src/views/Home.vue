@@ -1,28 +1,49 @@
 <template>
   <div class="wrapper">
+
     <Nav />
 
-    <div class="content"> 
-      <h3>Your account:</h3>
-      <router-link to="/account">Account</router-link>
+    <div class="logo-container">
+      <img
+        class="logo"
+        src="../assets/image/LOGO_taskSync.svg"
+        alt="logo_taskSync"
+      />
+    </div>
+
+    <div class="justify-center">
+      <div class="slogan font-normal">
+        <span>Get moving and achieve <br>
+ your </span>
+        <span class="text-purple-700 font-semibold">goals</span>
+        <span > with a</span>
+        <span class="text-purple-700 font-semibold"> smile.</span>
+      </div>
+      <!-- <h3>Your account:</h3> -->
+      <!-- <router-link to="/account">Account</router-link> -->
     </div>
     <NewTask />
-    <h1>Tasks:</h1>
-    <TaskItem v-for="task in tasks" :key="task.id" :task="task" @taskDeleted="handleTaskDeleted(task)" />
-
+    <h1 class="text-purple-700 text-2xl p-4 ">Tasks:</h1>
+    <div class="task-container bg-slate-100">
+    <TaskItem
+      v-for="task in tasks"
+      :key="task.id"
+      :task="task"
+      @taskDeleted="handleTaskDeleted(task)"
+    />
+    </div>
     <!-- Integra el componente Profile -->
-    <Profile :session="session" />
+    <!-- <Profile :session="session" /> -->
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch } from "vue";
 import { useTaskStore } from "../stores/task";
-import { useRouter } from 'vue-router';
-import Nav from '../components/Nav.vue';
-import NewTask from '../components/NewTask.vue';
-import TaskItem from '../components/TaskItem.vue';
-
+import { useRouter } from "vue-router";
+import Nav from "../components/Nav.vue";
+import NewTask from "../components/NewTask.vue";
+import TaskItem from "../components/TaskItem.vue";
 
 const taskStore = useTaskStore();
 
@@ -40,20 +61,53 @@ const fetchTasks = async () => {
 
 onMounted(fetchTasks); // Obtener las tareas al montar el componente
 
-watch(() => taskStore.tasksArr, (newTasks) => {
-  tasks.value = newTasks; // Actualizar las tareas cuando cambien en el almacén de tareas
-});
+watch(
+  () => taskStore.tasksArr,
+  (newTasks) => {
+    tasks.value = newTasks; // Actualizar las tareas cuando cambien en el almacén de tareas
+  }
+);
+
+// const handleTaskDeleted = async (task) => {
+//   const confirmed = confirm("Are you sure you want to delete this task?");
+//   if (confirmed) {
+//     await taskStore.deleteTask(task.id);
+//     await fetchTasks(); // Actualizar la lista de tareas después de la eliminación
+//   }
+// };
 
 const handleTaskDeleted = async (task) => {
-  const confirmed = confirm("Are you sure you want to delete this task?");
+  const confirmed = window.confirm("Are you sure you want to delete this task?");
   if (confirmed) {
     await taskStore.deleteTask(task.id);
-    await fetchTasks(); // Actualizar la lista de tareas después de la eliminación
+    tasks.value = tasks.value.filter((t) => t.id !== task.id); // Eliminación local solo después de la eliminación en el store
   }
 };
+
 </script>
 
-<style></style>
+<style scoped>
+.wrapper {
+  height: 100%;
+  width: 100%;
+  /* background-color: burlywood; */
+}
+
+.slogan{
+  margin: 2rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+
+@media (min-width: 767px) {
+
+
+  
+}
+
+
+</style>
 
 <!-- 
 **Hints**

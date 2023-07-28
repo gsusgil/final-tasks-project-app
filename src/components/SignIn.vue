@@ -3,7 +3,9 @@
 <template>
 
   <div class="container">
-    <h3 class="header-title">Log In to ToDo App</h3>
+<div>
+  <img class="logo" src="../assets/image/LOGO_taskSync.svg" alt="logo_taskSync">
+</div>
     
     <form @submit.prevent="signIn" class="form-sign-in">
       <div class="form">
@@ -29,13 +31,13 @@
             required
           />
         </div>
-        <button class="button" type="submit">Sign In</button>
+        <button class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" type="submit">Sign In</button>
 
         
       </div>
     </form>
 
-    <p>Dont have an account? <PersonalRouter :route="route" :buttonText="buttonText" class="sign-up-link"/></p>
+    <p class="text-neutral-500 text-sm ">Dont have an account? <PersonalRouter :route="route" :buttonText="buttonText" class="sign-up-link hover:text-purple-800"/></p>
   </div>
 
 </template>

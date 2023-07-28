@@ -1,21 +1,34 @@
 <template class="m-10">
-  <h1>Add a new Task</h1>
+  <h1 class="title-task pl-2">Add a new Task </h1>
   <div v-if="showErrorMessage">
     <p class="error-text">{{ errorMessage }}</p>
   </div>
-  <div>
-    <div class="input-field">
-      <input type="text" class="file:border file:border-solid" placeholder="Add a Task Title here" v-model="name" />
-    </div>
-    <div class="input-field">
+  <div class="container-new-task">
+    <div>
       <input
         type="text"
+        class="input-field"
+        placeholder="Add a Task Title here"
+        v-model="name"
+      />
+    </div>
+    <div>
+      <input
+        type="text"
+        class="input-field"
         placeholder="Add a Task Description "
         v-model="description"
         @keyup.enter="addTask"
       />
     </div>
-    <button @click="addTask" class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800"><span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">Add Task</span></button>
+
+    <button
+      @click="addTask"
+      type="submit"
+      class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-700 font-medium rounded-lg text-sm px-5 py-1.5 text-center mr-2 focus:ring-transparent"
+    >
+      Add Task
+    </button>
   </div>
 </template>
 
@@ -50,4 +63,37 @@ const addTask = () => {
 };
 </script>
 
-<style></style>
+<style scoped>
+.container-new-task {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.title-task{
+  font-size: 1.5rem;
+  color: #6d28d9;
+}
+
+.input-field {
+  width: 250px;
+  padding-left: 20px;
+  /* background-color: rgb(216, 216, 216); */
+  border: 2px solid #6d28d9;
+  border-radius: 8px;
+}
+
+.input-field:focus {
+  background-color: #f4f3f3;
+}
+
+@media (max-width: 767px) {
+  .container-new-task {
+    display: flex;
+    flex-direction: column;
+  }
+}
+</style>

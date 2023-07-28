@@ -94,10 +94,27 @@ export const useTaskStore = defineStore("tasks", () => {
 
   // borrar tareas de supabase
   
-  const deleteTask = async (id) => {
-    const { data, error } = await supabase.from("tasks").delete().match({
-      id: id,
-    });
+  // const deleteTask = async (id) => {
+  //   try{
+  //   const { data, error } = await supabase.from("tasks").delete().match({
+  //     id: id,
+  //   });
+  //       // Realiza cualquier acción adicional o actualización en el estado después de eliminar la tarea (si es necesario).
+  //   } catch (error) {
+  //       // Maneja el error aquí, puede mostrar un mensaje de error o realizar alguna otra acción de acuerdo a tus necesidades.
+  //       console.error("Error al eliminar la tarea:", error);
+  //     }
+  //   };
+
+  const deleteTask = async () => {
+    inputUpdate.value = false; // Cerrar el diálogo antes de eliminar la tarea.
+  
+    try {
+      await useTaskStore.deleteTask(props.task.id);
+      emit("taskDeleted");
+    } catch (error) {
+      console.error("Error al eliminar la tarea:", error);
+    }
   };
   
   return { tasksArr, fetchTasks, addTask, editTask, updateTask, completeTask, deleteTask };
