@@ -1,43 +1,37 @@
 <template>
-  <div>
+  <div class="perfil-container">
     <form class="form-widget" @submit.prevent="updateProfile">
       <div>
         <label for="email">Email</label>
-        <input id="email" type="text" :value="session?.user?.email" disabled />
+        <input class="input-field-perfil" id="email" type="text" :value="session?.user?.email" disabled />
       </div>
       <div>
         <label for="username">Name</label>
-        <input id="username" type="text" v-model="username" />
+        <input class="input-field-perfil" id="username" type="text" v-model="username" />
       </div>
       <div>
         <label for="website">Website</label>
-        <input id="website" type="url" v-model="website" />
+        <input class="input-field-perfil" id="website" type="url" v-model="website" />
       </div>
 
       <div>
         <label for="location">Location</label>
-        <input id="location" type="text" v-model="location" />
+        <input class="input-field-perfil" id="location" type="text" v-model="location" />
       </div>
 
       <div>
         <label for="avatar_url">Avatar URL</label>
-        <input id="avatar_url" type="url" v-model="avatarUrl" />
+        <input class="input-field-perfil" id="avatar_url" type="url" v-model="avatarUrl" />
       </div>
 
       <div>
         <button
-          type="button"
-          class="button primary block"
-          :disabled="loading"
-          @click="updateProfile"
-        >
+  type="submit"
+  class="button-udapet-perfil button primary block text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+  :disabled="loading"
+  @click="updateProfile"
+>
           {{ loading ? "Loading ..." : "Update" }}
-        </button>
-      </div>
-
-      <div>
-        <button class="button block" @click="signOut" :disabled="loading">
-          Sign Out
         </button>
       </div>
     </form>
@@ -174,4 +168,14 @@ const updateProfile = async () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+.button-udapet-perfil{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-top: 20px;
+  
+}
+
+</style>

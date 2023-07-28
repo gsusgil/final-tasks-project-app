@@ -4,7 +4,7 @@
       <Nav />
     </div>
 
-    <h1>Account</h1>
+    <h1 class="text-purple-700 text-2xl p-4">Account</h1>
     <div>
     <Perfil
       :session="session"

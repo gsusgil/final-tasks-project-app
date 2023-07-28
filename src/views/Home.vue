@@ -1,4 +1,5 @@
 <template>
+  
   <div class="wrapper">
 
     <Nav />
@@ -24,7 +25,7 @@
     </div>
     <NewTask />
     <h1 class="text-purple-700 text-2xl p-4 ">Tasks:</h1>
-    <div class="task-container bg-slate-100">
+    <div class="task-container bg-slate-100 ">
     <TaskItem
       v-for="task in tasks"
       :key="task.id"
@@ -68,21 +69,22 @@ watch(
   }
 );
 
+const handleTaskDeleted = async (task) => {
+  const confirmed = confirm("Are you sure you want to delete this task?");
+  if (confirmed) {
+    await taskStore.deleteTask(task.id);
+    await fetchTasks(); // Actualizar la lista de tareas después de la eliminación
+  }
+};
+
 // const handleTaskDeleted = async (task) => {
-//   const confirmed = confirm("Are you sure you want to delete this task?");
+//   const confirmed = window.confirm("Are you sure you want to delete this task?");
 //   if (confirmed) {
 //     await taskStore.deleteTask(task.id);
-//     await fetchTasks(); // Actualizar la lista de tareas después de la eliminación
+//     tasks.value = tasks.value.filter((t) => t.id !== task.id); // Eliminación local solo después de la eliminación en el store
 //   }
 // };
 
-const handleTaskDeleted = async (task) => {
-  const confirmed = window.confirm("Are you sure you want to delete this task?");
-  if (confirmed) {
-    await taskStore.deleteTask(task.id);
-    tasks.value = tasks.value.filter((t) => t.id !== task.id); // Eliminación local solo después de la eliminación en el store
-  }
-};
 
 </script>
 
@@ -100,12 +102,36 @@ const handleTaskDeleted = async (task) => {
 }
 
 
-@media (min-width: 767px) {
 
 
-  
+/* Estilos para desktop */
+@media (min-width: 640px) {
+  .task-container {
+    
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 1rem; 
+    justify-content: flex-start; 
+    align-content: flex-start; 
+    height: 100vh; 
+  }
+
 }
 
+/* Estilos para mobile */
+@media (max-width: 639px) {
+
+  .task-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-left: -1rem;
+}
+  .task-container {
+    justify-content: center; /* Centramos las tarjetas */
+  }
+}
 
 </style>
 

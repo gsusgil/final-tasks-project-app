@@ -1,24 +1,8 @@
 <template>
   <nav class="sidebar">
-     <!-- <PersonalRouter :route="route" :buttonText="buttonText" class="logo-link"/>  -->
-
-<!--     
-    <router-link to="/">
-      Home
-    </router-link>
-
-    <ul>
-        <li>
-          <router-link to="/">Task Manager</router-link>
-        </li>
-
-        <li>
-          <router-link to="/account">Your Account</router-link>
-        </li>
-    </ul> -->
 
 
-    <div>
+    <div class="sticky top-0 z-10">
       <button class="ml-4 my-2" @click="setOpen(true)">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -38,16 +22,16 @@
   
       <div
         v-if="open"
-        class="bg-white-600/50 min-h-screen w-full fixed top-0 left-0 right-0 backdrop-blur-sm"
+        class="bg-white-600/50 min-h-full w-full fixed top-0 left-0 right-0 backdrop-blur-sm"
         @click="setOpen(false)"
       ></div>
   
       <div
         :class="{ 'w-60': open, 'w-0': !open }"
-        class="bg-purple-700 min-h-screen fixed top-0 left-0 transition-all duration-300"
+        class="bg-purple-700 min-h-full fixed top-0 left-0 transition-all duration-300"
       >
         <div v-if="open" class="pt-3">
-          <button class="ml-4 text-white mb-14" @click="setOpen(false)">
+          <button class="ml-4 text-white mb-14 " @click="setOpen(false)">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -80,11 +64,6 @@
           >
           <router-link to="/account">Account</router-link>
           </div>
-          <!-- <div
-            class="text-center text-white text-xl hover:bg-orange-400 cursor-pointer py-3 mb-2"
-          >
-          <button @click="signOut" class="button">Log out</button>
-          </div> -->
         </div>
       </div>
     </div>
@@ -100,6 +79,8 @@
       </ul>
     </div>
 
+    <div class="menu-indicator" ref="menuIndicator" :style="{ width: indicatorWidth + 'px', left: indicatorLeft + 'px' }"></div>
+
   </nav>
 </template>
 
@@ -108,7 +89,7 @@
 import { useUserStore } from "../stores/user";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
-import { ref } from 'vue';
+import { ref, onMounted} from 'vue';
 
 //constant to save a variable that will hold the use router method
 const route = "/";
@@ -141,7 +122,31 @@ const open = ref(false);
     open.value = value;
   };
   
+//-----------------------
 
+const menuIndicator = ref(null);
+const indicatorWidth = ref(0);
+const indicatorLeft = ref(0);
+
+// Función para calcular el ancho y la posición de la barra indicadora
+const updateIndicator = () => {
+  const menu = menuIndicator.value; // Utilizamos la referencia "menuIndicator" para obtener el elemento
+
+  if (menu) {
+    const activeLink = menu.querySelector('.active'); // Suponiendo que tienes una clase "active" en el enlace del menú activo
+
+    if (activeLink) {
+      indicatorWidth.value = activeLink.offsetWidth;
+      indicatorLeft.value = activeLink.offsetLeft;
+    }
+  }
+};
+
+// Ejecutar la función updateIndicator al montar el componente y cada vez que hagas scroll
+onMounted(() => {
+  updateIndicator();
+  window.addEventListener('scroll', updateIndicator);
+});
 
 </script>
 
@@ -159,4 +164,26 @@ const open = ref(false);
   align-items: center;
   padding: 1rem;
  }
+
+ .sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #ffffff; 
+  z-index: 10; 
+  overflow-x: auto; 
+}
+
+.menu-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background-color: #9333ea; 
+  transition: width 0.3s, left 0.3s; 
+  z-index: 1; 
+}
 </style>
