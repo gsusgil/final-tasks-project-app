@@ -46,7 +46,7 @@ const avatarUrl = ref("");
 // Método para obtener el perfil
 async function getProfile() {
   try {
-    isLoading.value = true; // Se cambia "loading" por "isLoading"
+    isLoading.value = true; 
     const sessionValue = session.value; // Se agrega esta línea para obtener el valor de "session"
 
     if (!sessionValue) {

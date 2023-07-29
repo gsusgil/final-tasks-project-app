@@ -53,7 +53,7 @@
 </svg>
 
       </button>
-      
+
       <button class="button-card" @click="deleteTask(inputUpdate)">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -101,15 +101,6 @@
       </div>
       <!-- ---------------------------------- -->
 
-      <!-- <div class="toggle">
-        <label class="relative inline-flex items-center mb-5 cursor-pointer">
-          <input type="checkbox" value="" class="sr-only peer" />
-          <div
-            class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
-          ></div>
-        </label>
-      </div> -->
-      <!-- ---------------------------------- -->
     </div>
 
   </div>
@@ -175,13 +166,6 @@ const deleteTask = async () => {
   inputUpdate.value = false;
 };
 
-// const confirmDelete = async () => {
-//   const confirmed = window.confirm("Are you sure you want to delete this task?");
-//   if (confirmed) {
-//     await taskStore.deleteTask(props.task.id);
-//     emit("taskDeleted");
-//   }
-// };
 
 // Funcion que realiza un "toggle" con un boton @click. para cambiar la condicion de la variable de false a true.
 const updateToggle = () => {
@@ -201,10 +185,6 @@ const toggleComplete = () => {
   props.task.is_complete = !props.task.is_complete;
   taskStore.completeTask(props.task.id, props.task.is_complete);
   emit("taskUpdated");
-
-  // if (props.task.is_complete) {
-  //   alert("Task is completed");
-  // }
 
   emit('taskUpdated')
 };
@@ -261,8 +241,8 @@ onMounted(() => {
 }
 
 .input-line-break {
-  width: 75vw; /* Establecemos el ancho del input al 75% del ancho del contenedor */
-  margin: 0.5rem 0; /* Agregamos un margen superior e inferior para separar del contenido anterior y posterior */
+  width: 75vw;
+  margin: 0.5rem 0; 
 }
 .task-complete {
   border: 4px solid #3dcbb1;
@@ -356,24 +336,6 @@ dialog {
   dialog > input:focus {
     box-shadow: 0 0 1.5px 1.5px #fb923c;
   }
-/* dialog {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 300px;
-  gap: 1rem;
-  padding: 1rem;
-  border: 2px solid #6d28d9;
-  border-radius: 10px;
-  position: absolute;
-  top: 50%;
-  left: 20%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  z-index: 999;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
-} */
-
 
 
 @media (max-width: 639px) {

@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits, onMounted, computed } from "vue";
+import { ref, defineProps, defineEmits, computed } from "vue";
 import { useUserStore } from "../stores/user";
 import { supabase } from "../supabase";
 
@@ -52,7 +52,7 @@ const emitUpdateProfile = defineEmits(["updateProfileEmit"]);
 const profile = computed(() => (userStore.profile ? userStore.profile : {}));
 
 const userStore = useUserStore();
-const loading = ref(false); // Corrección: Se cambia true por false para inicializar loading
+const loading = ref(false);
 
 // Variables para almacenar los datos del perfil
 const username = ref("");
@@ -142,12 +142,12 @@ const updateProfile = async () => {
       full_name: username.value,
       website: website.value,
       location: location.value,
-      // Asegúrate de agregar los campos adicionales que deseas editar
-      user_id: user.id, // Asigna el user_id del usuario autenticado al perfil
+      
+      user_id: props.profile.user_id, // Asigna el user_id del usuario autenticado al perfil
     };
     console.log("data actualizada", updatedProfileData);
 
-    // Realiza una llamada a la API de Supabase para actualizar el perfil
+   
     const { data, error } = await supabase
       .from("profiles")
       .update(updatedProfileData)
@@ -157,7 +157,7 @@ const updateProfile = async () => {
       console.error(error);
     } else {
       console.log("Perfil actualizado correctamente");
-      // Emitir evento para actualizar el perfil en el componente Account
+      
       emitUpdateProfile("updateProfileEmit", updatedProfileData);
     }
   } catch (error) {
