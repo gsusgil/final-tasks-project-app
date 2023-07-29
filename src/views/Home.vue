@@ -20,8 +20,6 @@
         <span > with a</span>
         <span class="text-purple-700 font-semibold"> smile.</span>
       </div>
-      <!-- <h3>Your account:</h3> -->
-      <!-- <router-link to="/account">Account</router-link> -->
     </div>
     <NewTask />
     <h1 class="text-purple-700 text-2xl p-4 ">Tasks:</h1>
@@ -33,8 +31,6 @@
       @taskDeleted="handleTaskDeleted(task)"
     />
     </div>
-    <!-- Integra el componente Profile -->
-    <!-- <Profile :session="session" /> -->
   </div>
 </template>
 
@@ -77,14 +73,6 @@ const handleTaskDeleted = async (task) => {
   }
 };
 
-// const handleTaskDeleted = async (task) => {
-//   const confirmed = window.confirm("Are you sure you want to delete this task?");
-//   if (confirmed) {
-//     await taskStore.deleteTask(task.id);
-//     tasks.value = tasks.value.filter((t) => t.id !== task.id); // Eliminación local solo después de la eliminación en el store
-//   }
-// };
-
 
 </script>
 
@@ -92,7 +80,6 @@ const handleTaskDeleted = async (task) => {
 .wrapper {
   height: 100%;
   width: 100%;
-  /* background-color: burlywood; */
 }
 
 .slogan{
@@ -100,8 +87,6 @@ const handleTaskDeleted = async (task) => {
   font-size: 1.5rem;
   text-align: center;
 }
-
-
 
 
 /* Estilos para desktop */
