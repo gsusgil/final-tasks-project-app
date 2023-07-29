@@ -199,19 +199,18 @@ const selectColor = async (color) => {
   selectedColor.value = color;
   showColorOptions.value = false;
 
-  // Actualizar el atributo card_color de la tarea con el color seleccionado.
+  // Actualiza el atributo card_color de la tarea con el color seleccionado.
   const updatedData = {
     card_color: color,
   };
-  console.log(selectedColor.value); // Agrega este console.log para verificar si el color seleccionado es el correcto.
+  console.log(selectedColor.value);
   await useTaskStore().editTask(props.task.id, updatedData);
 
-  // Actualizar la propiedad task.card_color después de cambiar el color en la base de datos.
+  //  Para Actualizar la propiedad task.card_color después de cambiar el color en la base de datos.
   props.task.card_color = color;
 };
 
-
-// Obtener las tareas al montar el componente para mostrarla.
+// Obtiene las tareas al montar el componente para mostrarla.
 onMounted(() => {
   emit("taskUpdated");
 });

@@ -138,6 +138,8 @@ const updateProfile = async () => {
     }
 
     // Crea el objeto con los datos actualizados del perfil
+
+
     const updatedProfileData = {
       full_name: username.value,
       website: website.value,
@@ -166,6 +168,8 @@ const updateProfile = async () => {
     loading.value = false;
   }
 };
+
+
 </script>
 
 <style scoped>

@@ -68,9 +68,6 @@ const errorMessage = ref("");
 const showSuccessMessage = ref(false);
 const successMessage = ref("");
 
-// Resto de la lógica del componente
-// ...
-
 const addTask = () => {
   if (name.value.length === 0 || description.value.length === 0) {
     // Mostrar mensaje de error
