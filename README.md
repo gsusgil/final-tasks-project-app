@@ -1,7 +1,11 @@
 
 [![LOGO-task-Sync.jpg](https://i.postimg.cc/3wzNj8pm/LOGO-task-Sync.jpg)](https://postimg.cc/mcNTBGmg)
 
-[![Presentacion](https://i.postimg.cc/PJkBQYNY/Artboard-1-100.jpg)](https://postimg.cc/ygvQVJm8)
+<!-- [![Presentacion](https://i.postimg.cc/PJkBQYNY/Artboard-1-100.jpg)](https://postimg.cc/ygvQVJm8) -->
+
+<div align="center">
+  <img src="(https://i.postimg.cc/PJkBQYNY/Artboard-1-100.jpg)](https://postimg.cc/ygvQVJm8)" alt="[Presentacion]" style="max-width: 100%; height: auto;">
+</div>
 
 ### Proyect Tracking
 ## Semana 1
