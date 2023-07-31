@@ -1,7 +1,7 @@
 
-![taskSync](../final-app-tasks/src/assets/image/LOGO_taskSync.svg)
+[![LOGO-task-Sync.jpg](https://i.postimg.cc/3wzNj8pm/LOGO-task-Sync.jpg)](https://postimg.cc/mcNTBGmg)
 
-![Presentacion]("src/assets/image/Artboard 1-100.jpg")
+[![Presentacion](https://i.postimg.cc/PJkBQYNY/Artboard-1-100.jpg)](https://postimg.cc/ygvQVJm8)
 
 ### Proyect Tracking
 ## Semana 1
